@@ -1,8 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
-  // Simple scroll reveal effect (for that cinematic feel)
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [expandedSection, setExpandedSection] = useState(null);
+
+  // Mouse tracking for Custom Cursor
+  useEffect(() => {
+    const moveCursor = (e) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', moveCursor);
+    return () => window.removeEventListener('mousemove', moveCursor);
+  }, []);
+
+  // Theme Toggle Effect
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [isDarkMode]);
+
+  // Scroll Reveal Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -22,14 +46,54 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => setIsHovering(false);
+
+  const toggleAccordion = (index) => {
+    setExpandedSection(expandedSection === index ? null : index);
+  };
+
+  const philosophy = [
+    {
+      title: "01. AGENTIC WORKFLOWS",
+      content: "I believe in moving beyond simple RAG. True autonomous systems require multi-step reasoning, deterministic guardrails, and dynamic tool calling. I build systems that don't just answer questions, but execute complex compliance workflows reliably."
+    },
+    {
+      title: "02. MULTI-TENANT SCALE",
+      content: "Security and isolation are non-negotiable. Architecting for SaaS means ensuring zero cross-tenant data access, robust RBAC, and policy-driven permissions from day one, rather than bolting them on later."
+    },
+    {
+      title: "03. PERFORMANCE ENGINEERING",
+      content: "Latency is a feature. Whether it's sub-second first-response times for voice agents or optimizing MySQL queries for a 20% gain, I engineer backend systems that are both resilient and blazing fast."
+    }
+  ];
+
   return (
     <>
+      {/* Custom Cursor */}
+      <motion.div 
+        className={`custom-cursor ${isHovering ? 'hovering' : ''}`}
+        animate={{ 
+          x: cursorPos.x, 
+          y: cursorPos.y,
+        }}
+        transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
+      >
+        {isHovering ? "VIEW" : ""}
+      </motion.div>
+
       <header className="header">
         <div className="logo">NP.</div>
-        <nav className="nav-links">
-          <a href="#work" className="nav-link">Work</a>
-          <a href="#projects" className="nav-link">Projects</a>
-          <a href="#contact" className="nav-link">Contact</a>
+        <nav className="nav-links" style={{ display: 'flex', alignItems: 'center' }}>
+          <button 
+            onClick={() => setIsDarkMode(!isDarkMode)} 
+            className="nav-link"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {isDarkMode ? 'LIGHT MODE' : 'DARK MODE'}
+          </button>
         </nav>
       </header>
 
@@ -86,7 +150,11 @@ function App() {
         <section id="projects" className="section container">
           <h2 className="text-huge reveal" style={{ marginBottom: '4rem' }}>PROJECTS</h2>
 
-          <div className="project-card reveal">
+          <div 
+            className="project-card reveal"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <div className="project-info">
               <div className="flex justify-between items-start" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <h3 className="project-title">THEMIS</h3>
@@ -105,14 +173,16 @@ function App() {
               </div>
             </div>
             <div style={{ backgroundColor: 'var(--color-text)', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-bg)' }}>
-              {/* Placeholder for cinematic image */}
               <span className="font-display">THEMIS.VISUAL</span>
             </div>
           </div>
 
-          <div className="project-card reveal">
+          <div 
+            className="project-card reveal"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             <div style={{ backgroundColor: '#D9381E', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', order: -1 }}>
-              {/* Placeholder for cinematic image */}
               <span className="font-display">STAYZY.VISUAL</span>
             </div>
             <div className="project-info" style={{ order: 0 }}>
@@ -134,26 +204,35 @@ function App() {
           </div>
         </section>
 
-        {/* SKILLS */}
-        <section className="section container">
-          <h2 className="text-huge reveal" style={{ marginBottom: '4rem' }}>CAPABILITIES</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
-            <div className="reveal">
-              <h4 className="text-accent" style={{ marginBottom: '1rem' }}>AI / ML</h4>
-              <p>RAG, Agentic Workflows, LLM Fine-tuning, OpenAI SDK, LiteLLM, Vector DBs (Qdrant), Ollama.</p>
-            </div>
-            <div className="reveal">
-              <h4 className="text-accent" style={{ marginBottom: '1rem' }}>BACKEND</h4>
-              <p>FastAPI, Node.js, Express.js, RESTful APIs, Celery, Redis.</p>
-            </div>
-            <div className="reveal">
-              <h4 className="text-accent" style={{ marginBottom: '1rem' }}>FRONTEND</h4>
-              <p>React.js, Next.js, Tailwind CSS, HTML5, CSS3, Redux.</p>
-            </div>
-            <div className="reveal">
-              <h4 className="text-accent" style={{ marginBottom: '1rem' }}>CLOUD & DEVOPS</h4>
-              <p>AWS (Cognito, Lambda, S3, EC2, IAM, RDS), Azure, Docker, GitHub Actions, Jenkins.</p>
-            </div>
+        {/* ACCORDION / PHILOSOPHY */}
+        <section className="section container reveal">
+          <h2 className="text-huge" style={{ marginBottom: '4rem' }}>APPROACH</h2>
+          <div>
+            {philosophy.map((item, idx) => (
+              <div key={idx} className="accordion-item" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+                <button 
+                  className="accordion-header" 
+                  onClick={() => toggleAccordion(idx)}
+                >
+                  {item.title}
+                  <span style={{ color: 'var(--color-accent)' }}>{expandedSection === idx ? '-' : '+'}</span>
+                </button>
+                <AnimatePresence>
+                  {expandedSection === idx && (
+                    <motion.div 
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="accordion-content"
+                    >
+                      <p style={{ paddingBottom: '2rem', maxWidth: '800px', fontSize: '1.25rem' }}>
+                        {item.content}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -164,9 +243,9 @@ function App() {
         <div className="container reveal">
           <h2 className="text-massive footer-massive">LET'S BUILD.</h2>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginTop: '3rem' }}>
-            <a href="mailto:panchalnitin1001@gmail.com" className="btn btn-accent">EMAIL ME</a>
-            <a href="https://github.com/nitinpanchal1001" className="btn" style={{ borderColor: 'var(--color-bg)', color: 'var(--color-bg)' }}>GITHUB</a>
-            <a href="https://linkedin.com/in/nitin-panchal1001" className="btn" style={{ borderColor: 'var(--color-bg)', color: 'var(--color-bg)' }}>LINKEDIN</a>
+            <a href="mailto:panchalnitin1001@gmail.com" className="btn btn-accent" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>EMAIL ME</a>
+            <a href="https://github.com/nitinpanchal1001" className="btn" style={{ borderColor: 'var(--color-bg)', color: 'var(--color-bg)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>GITHUB</a>
+            <a href="https://linkedin.com/in/nitin-panchal1001" className="btn" style={{ borderColor: 'var(--color-bg)', color: 'var(--color-bg)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>LINKEDIN</a>
           </div>
           <p style={{ marginTop: '4rem', color: '#666', fontSize: '0.875rem', textTransform: 'uppercase' }}>
             © {new Date().getFullYear()} Nitin Panchal. All rights reserved.
