@@ -176,12 +176,15 @@ function App() {
               <p>
                 Built a multi-tenant agentic SaaS with a 3-stage pipeline (policy RAG → LLM reasoning → deterministic risk scoring) that auto-detects citation-backed violations across GDPR, HIPAA, PCI-DSS, SOX, cutting manual review effort ~80%.
               </p>
-              <div className="project-tech">
+              <div className="project-tech" style={{ flexWrap: 'wrap', gap: '0.5rem' }}>
                 <span className="tech-tag">Next.js</span>
                 <span className="tech-tag">FastAPI</span>
                 <span className="tech-tag">RAG</span>
                 <span className="tech-tag">Qdrant</span>
                 <span className="tech-tag">Celery</span>
+                <span className="tech-tag">LiteLLM</span>
+                <span className="tech-tag">Redis</span>
+                <span className="tech-tag">PostgreSQL</span>
               </div>
             </div>
             <div style={{ backgroundColor: 'var(--color-text)', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-bg)' }}>
@@ -197,21 +200,56 @@ function App() {
                   className="case-study-details"
                   onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
                 >
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                    <div>
-                      <h4>THE ARCHITECTURE</h4>
-                      <p style={{ opacity: 0.8, fontSize: '0.9rem' }}>
-                        The core engine relies on a robust Celery-based async ingestion pipeline (S3 → parse → chunk → embed → index) with automatic retries. 
-                        Embeddings (1536-dim OpenAI) are stored in Qdrant, retrieving top-5 policy clauses to eliminate hallucinations and lifting precision by ~35%.
-                      </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                    
+                    {/* The 3 Pillars */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+                      
+                      {/* Pillar 1 */}
+                      <div>
+                        <h4 style={{ letterSpacing: '-0.02em', fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>01. THE ASYNC PIPELINE</h4>
+                        <p style={{ opacity: 0.8, fontSize: '0.95rem', lineHeight: '1.6' }}>
+                          The API is fast and stateless. Heavy workloads (Embeddings, <strong>OpenAI Whisper-1</strong> TTS/STT processing, LLM reasoning) are offloaded to <strong>Celery workers</strong>. 
+                          <br/><br/>
+                          The RAG agent retrieves the top-5 relevant clauses from <strong>Qdrant</strong>. The system relies on a <strong>LiteLLM wrapper</strong>, making the architecture completely AI model-agnostic (effortlessly swapping OpenAI, Anthropic, or local Ollama). The Reasoning agent forces structured JSON-mode output to guarantee every violation is backed by an exact policy citation.
+                        </p>
+                      </div>
+
+                      {/* Pillar 2 */}
+                      <div>
+                        <h4 style={{ letterSpacing: '-0.02em', fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>02. DETERMINISTIC SCORING</h4>
+                        <p style={{ opacity: 0.8, fontSize: '0.95rem', lineHeight: '1.6' }}>
+                          "The AI proposes; the formula disposes." An LLM cannot be trusted to generate an auditable score.
+                          <br/><br/>
+                          Instead, the LLM detects violations, and a <strong>deterministic risk algorithm</strong> computes the 0–100 score. Severity sets the tier, while volume positions the score within the band via confidence-weighted evidence.
+                        </p>
+                      </div>
+
+                      {/* Pillar 3 */}
+                      <div>
+                        <h4 style={{ letterSpacing: '-0.02em', fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>03. ENTERPRISE ISOLATION</h4>
+                        <p style={{ opacity: 0.8, fontSize: '0.95rem', lineHeight: '1.6' }}>
+                          Multi-tenancy enforced at every layer: Postgres queries, payload filters on the Qdrant vector space, and tenant-prefixed S3 keys.
+                          <br/><br/>
+                          Secured via JWT auth with 15-minute rotation and 7-day refresh registries stored in Redis. Includes strict 3-role RBAC (admin, reviewer, viewer) and rate-limiting.
+                        </p>
+                      </div>
+
                     </div>
-                    <div>
-                      <h4>SECURITY & SCALE</h4>
-                      <p style={{ opacity: 0.8, fontSize: '0.9rem' }}>
-                        The platform enforces tenant isolation, 3-role RBAC, and JWT authentication with 15-minute access windows and rotating 7-day refresh tokens.
-                        Rate limiting and request-size caps ensure deterministic risk-scoring on 50MB+ uploads without system degradation.
-                      </p>
+
+                    {/* Stats Footer */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)', fontSize: '0.8rem', fontFamily: 'var(--font-display)', fontWeight: '700', color: 'var(--color-accent)' }}>
+                      <span>1536-DIM EMBEDDINGS</span>
+                      <span>•</span>
+                      <span>COSINE DISTANCE</span>
+                      <span>•</span>
+                      <span>GPT-4O / GPT-4O-MINI</span>
+                      <span>•</span>
+                      <span>GDPR / HIPAA / PCI-DSS / SOX</span>
+                      <span>•</span>
+                      <span>TEMP 0.0</span>
                     </div>
+
                   </div>
                 </motion.div>
               )}
