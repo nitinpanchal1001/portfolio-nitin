@@ -97,7 +97,10 @@ function App() {
 
       <header className="header">
         <div className="logo">NP.</div>
-        <nav className="nav-links" style={{ display: 'flex', alignItems: 'center' }}>
+        <nav className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <a href="https://s3-bucket-docs-99.s3.eu-north-1.amazonaws.com/Nitin_CV.pdf" target="_blank" rel="noopener noreferrer" className="resume-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            [ DOWNLOAD.CV ]
+          </a>
           <button 
             onClick={() => setIsDarkMode(!isDarkMode)} 
             className="nav-link"
