@@ -106,6 +106,7 @@ ul {
   z-index: 100;
   background: rgba(244, 244, 240, 0.9);
   backdrop-filter: blur(10px);
+  color: #0A0A0A; /* Always stay dark for contrast against the light header */
 }
 
 .logo {
@@ -114,6 +115,7 @@ ul {
   font-size: 1.5rem;
   letter-spacing: -0.05em;
   text-transform: uppercase;
+  color: #0A0A0A;
 }
 
 .nav-links {
@@ -127,6 +129,7 @@ ul {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   position: relative;
+  color: inherit;
 }
 
 .nav-link::after {

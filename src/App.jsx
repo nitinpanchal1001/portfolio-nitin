@@ -3,7 +3,13 @@ import { ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedMode = localStorage.getItem('theme');
+      return savedMode === 'dark';
+    }
+    return false;
+  });
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [expandedSection, setExpandedSection] = useState(null);
@@ -22,8 +28,10 @@ function App() {
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
     } else {
       document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
     }
   }, [isDarkMode]);
 
@@ -305,11 +313,11 @@ function App() {
           </div>
         </section>
 
-        {/* OFF GRID (MUSIC) */}
+        {/* OFF GRID */}
         <section className="section container reveal">
           <h2 className="text-huge" style={{ marginBottom: '4rem' }}>OFF-GRID</h2>
           <p className="text-muted" style={{ marginBottom: '2rem', fontSize: '1.25rem', maxWidth: '800px' }}>
-            Beyond the code, I am deeply passionate about Music. It requires the same level of discipline, creativity, and structural understanding as architecting software systems.
+            Beyond the code, my life revolves around two core disciplines: Music and Fitness. Whether it's discovering complex aural soundscapes or pushing physical limits at the gym, I believe in relentless consistency and constant growth.
           </p>
           
           <div className="off-grid-container">
@@ -319,8 +327,8 @@ function App() {
               onMouseLeave={handleMouseLeave}
               style={{ backgroundColor: '#1A1A1A' }}
             >
-              <span className="font-display text-muted">MUSIC.PERFORMANCE</span>
-              <div className="off-grid-overlay">LIVE SETS</div>
+              <span className="font-display text-muted">AURAL.EXPLORATION</span>
+              <div className="off-grid-overlay">MUSIC LISTENER</div>
             </div>
             <div 
               className="off-grid-item" 
@@ -328,8 +336,8 @@ function App() {
               onMouseLeave={handleMouseLeave}
               style={{ backgroundColor: '#2A2A2A' }}
             >
-              <span className="font-display text-muted">MUSIC.PRODUCTION</span>
-              <div className="off-grid-overlay">STUDIO</div>
+              <span className="font-display text-muted">PHYSICAL.DISCIPLINE</span>
+              <div className="off-grid-overlay">THE GYM</div>
             </div>
           </div>
         </section>
