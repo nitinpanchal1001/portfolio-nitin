@@ -69,25 +69,86 @@ function App() {
   const philosophy = [
     {
       title: "01. AGENTIC WORKFLOWS",
-      content: "I believe in moving beyond simple RAG. True autonomous systems require multi-step reasoning, deterministic guardrails, and dynamic tool calling. I build systems that don't just answer questions, but execute complex compliance workflows reliably."
+      content: "I believe in moving beyond simple RAG (Retrieval-Augmented Generation). True autonomous systems require multi-step reasoning, deterministic guardrails, and dynamic tool calling. I build systems that don't just answer questions, but autonomously execute complex compliance and data workflows with extreme reliability."
     },
     {
       title: "02. MULTI-TENANT SCALE",
-      content: "Security and isolation are non-negotiable. Architecting for SaaS means ensuring zero cross-tenant data access, robust RBAC, and policy-driven permissions from day one, rather than bolting them on later."
+      content: "Security and isolation are non-negotiable. Architecting for enterprise SaaS means ensuring zero cross-tenant data access, robust Role-Based Access Control (RBAC), and policy-driven permissions engineered from day one, rather than bolted on as an afterthought."
     },
     {
       title: "03. PERFORMANCE ENGINEERING",
-      content: "Latency is a feature. Whether it's sub-second first-response times for voice agents or optimizing MySQL queries for a 20% gain, I engineer backend systems that are both resilient and blazing fast."
+      content: "Latency is a feature, not a metric. Whether it's achieving sub-second first-response times for voice-based AI agents or optimizing complex MySQL procedures for a 30% performance gain, I engineer backend pipelines that are both highly resilient and blazing fast."
+    },
+    {
+      title: "04. BRUTALIST SIMPLICITY",
+      content: "In both code and design, form follows function. I reject bloated frameworks and cluttered interfaces in favor of raw, uncompromised performance. Minimalist, highly-functional architectures naturally lead to fewer bugs, faster iterations, and vastly superior user experiences."
+    },
+    {
+      title: "05. DETERMINISTIC RELIABILITY",
+      content: "AI systems are inherently stochastic, but enterprise software demands predictability. I specialize in building strict schemas, fallback protocols, and validation layers to force deterministic, auditable, and reliable outputs from otherwise unpredictable generative models."
+    }
+  ];
+
+  const skillsData = [
+    {
+      category: "AI / MACHINE LEARNING",
+      items: ["RAG", "Agentic Workflows", "LLM Fine-tuning", "OpenAI SDK", "LiteLLM", "Hugging Face", "Ollama"]
+    },
+    {
+      category: "LANGUAGES",
+      items: ["Python", "JavaScript", "TypeScript", "C++", "C", "HTML5/CSS3"]
+    },
+    {
+      category: "BACKEND",
+      items: ["FastAPI", "Node.js", "Express.js", "Celery", "RESTful APIs"]
+    },
+    {
+      category: "FRONTEND",
+      items: ["React.js", "Next.js", "Tailwind CSS", "Redux", "Framer Motion"]
+    },
+    {
+      category: "DATABASES",
+      items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Qdrant"]
+    },
+    {
+      category: "CLOUD & DEVOPS",
+      items: ["AWS Ecosystem", "Azure", "Docker", "Jenkins", "Git/GitHub", "Vercel", "Nginx"]
+    }
+  ];
+
+  const experience = [
+    {
+      company: "M37 Labs",
+      role: "Full Stack AI Engineer",
+      period: "OCT 2025 - PRESENT",
+      points: [
+        "Architected and delivered an intelligent risk-monitoring dashboard for public-relations firms, serving 10+ client orgs and 600+ users in production.",
+        "Designed multi-tenant architecture with strict tenant isolation, scoped RBAC, and policy-driven permissions, enforcing zero cross-tenant data access.",
+        "Built a model-orchestration layer routing inference across 4 LLM providers based on task type, latency SLA, and cost constraints, cutting inference spend by 40%.",
+        "Developed FastAPI microservices and Celery-based distributed task queues powering a unified voice + chat agent with sub-second (~800ms) first-response latency and 50+ concurrent sessions.",
+        "Own the backend of a clienteling application for a leading Indian jewellery brand, designing FastAPI services and managing Azure deployments via Jenkins CI/CD."
+      ]
+    },
+    {
+      company: "AventIQ",
+      role: "Software Developer",
+      period: "NOV 2024 - OCT 2025",
+      points: [
+        "Built a full-stack MERN Employee Management System integrating Microsoft Graph APIs to auto-provision employees in Azure AD.",
+        "Developed role-based dashboards for employees and HR using React and Tailwind CSS, enabling real-time insights.",
+        "Integrated Razorpay payments and AWS Cognito authentication into a serverless senior-citizen healthcare application, reducing server maintenance costs by 30%.",
+        "Developed a React-based admin dashboard on AWS with IAM RBAC, optimizing MySQL stored procedures for a 20% query performance gain."
+      ]
     }
   ];
 
   return (
     <>
       {/* Custom Cursor */}
-      <motion.div 
+      <motion.div
         className={`custom-cursor ${isHovering ? 'hovering' : ''}`}
-        animate={{ 
-          x: cursorPos.x, 
+        animate={{
+          x: cursorPos.x,
           y: cursorPos.y,
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
@@ -101,8 +162,8 @@ function App() {
           <a href="https://s3-bucket-docs-99.s3.eu-north-1.amazonaws.com/Nitin_CV.pdf" target="_blank" rel="noopener noreferrer" className="resume-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             [ DOWNLOAD.CV ]
           </a>
-          <button 
-            onClick={() => setIsDarkMode(!isDarkMode)} 
+          <button
+            onClick={() => setIsDarkMode(!isDarkMode)}
             className="nav-link"
             style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
             onMouseEnter={handleMouseEnter}
@@ -128,7 +189,7 @@ function App() {
         {/* EXPERIENCE */}
         <section id="work" className="section container">
           <h2 className="text-huge reveal mb-16" style={{ marginBottom: '4rem' }}>EXPERIENCE</h2>
-          
+
           <div className="exp-item reveal">
             <div className="exp-meta">
               <span className="exp-company">M37 Labs</span>
@@ -162,12 +223,47 @@ function App() {
           </div>
         </section>
 
+        {/* SKILLS */}
+        <section className="section container">
+          <div className="mask-overflow" style={{ marginBottom: '4rem' }}>
+            <motion.h2 
+              className="text-huge"
+              initial={{ y: "100%" }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            >
+              CAPABILITIES.SYS
+            </motion.h2>
+          </div>
+          
+          <div className="skills-grid">
+            {skillsData.map((skillGroup, idx) => (
+              <div key={idx} className="skill-category">
+                <h4 className="skill-category-title">[{skillGroup.category}]</h4>
+                <div className="project-tech">
+                  {skillGroup.items.map((item, itemIdx) => (
+                    <motion.span 
+                      key={itemIdx} 
+                      className="tech-tag" 
+                      style={{ fontSize: '0.85rem' }}
+                      whileHover={{ y: -3, scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {item}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* PROJECTS */}
         <section id="projects" className="section container">
           <h2 className="text-huge reveal" style={{ marginBottom: '4rem' }}>PROJECTS</h2>
 
-          <div 
+          <div
             className="project-card reveal"
             style={{ cursor: 'pointer' }}
             onClick={() => toggleProject('themis')}
@@ -198,42 +294,29 @@ function App() {
                 <span className="tech-tag">PostgreSQL</span>
               </div>
             </div>
-            <div style={{ 
-              height: '400px', 
-              backgroundColor: '#0A0A0A', 
-              color: '#F4F4F0', 
-              fontFamily: 'monospace', 
-              padding: '2rem', 
-              overflow: 'hidden', 
-              position: 'relative',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              borderLeft: '1px solid var(--color-border)',
-              borderBottom: '1px solid var(--color-border)'
-            }}>
-              <div style={{ position: 'absolute', top: '1rem', left: '2rem', color: '#666', fontSize: '0.75rem' }}>
+            <div className="terminal-container">
+              <div style={{ position: 'absolute', top: '1rem', left: '1.5rem', color: '#666', fontSize: '0.75rem' }}>
                 root@themis-worker-04:~# tail -f /var/log/celery/compliance_engine.log
               </div>
               <pre style={{ fontSize: '0.8rem', lineHeight: '1.6', opacity: 0.8, margin: 0, whiteSpace: 'pre-wrap' }}>
-{`[2026-07-20 10:14:02] INFO: Ingesting payload_1002.pdf (4.2MB)
+                {`[2026-07-20 10:14:02] INFO: Ingesting payload_1002.pdf (4.2MB)
 [2026-07-20 10:14:02] INFO: Chunking complete. Generated 42 nodes.
 [2026-07-20 10:14:03] INFO: Generating embeddings (text-embedding-3-small)
 [2026-07-20 10:14:03] INFO: Qdrant UPSERT success (collection: tenant_a)
 [2026-07-20 10:14:04] DEBUG: Starting RAG Policy Retrieval (k=5)
 [2026-07-20 10:14:04] DEBUG: Extracted clauses: [GDPR_Art32, HIPAA_164.312]
 [2026-07-20 10:14:05] WARN: Analyzer agent flagged anomaly in node_12.`}
-<br/><br/>
-<span style={{ color: 'var(--color-accent)', fontWeight: 'bold' }}>[2026-07-20 10:14:06] CRITICAL: VIOLATION_DETECTED (Risk Score: 94)</span>
-{`[2026-07-20 10:14:06] DETAIL: Unencrypted PII transmission detected.
+                <br /><br />
+                <span style={{ color: 'var(--color-accent)', fontWeight: 'bold' }}>[2026-07-20 10:14:06] CRITICAL: VIOLATION_DETECTED (Risk Score: 94)</span>
+                {`[2026-07-20 10:14:06] DETAIL: Unencrypted PII transmission detected.
 [2026-07-20 10:14:06] INFO: Pushing violation case to human-review queue.
 [2026-07-20 10:14:07] INFO: Awaiting next task... _`}
               </pre>
             </div>
-            
+
             <AnimatePresence>
               {expandedProject === 'themis' && (
-                <motion.div 
+                <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -241,16 +324,16 @@ function App() {
                   onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
                 >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-                    
+
                     {/* The 3 Pillars */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
-                      
+
                       {/* Pillar 1 */}
                       <div>
                         <h4 style={{ letterSpacing: '-0.02em', fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>01. THE ASYNC PIPELINE</h4>
                         <p style={{ opacity: 0.8, fontSize: '0.95rem', lineHeight: '1.6' }}>
-                          The API is fast and stateless. Heavy workloads (Embeddings, <strong>OpenAI Whisper-1</strong> TTS/STT processing, LLM reasoning) are offloaded to <strong>Celery workers</strong>. 
-                          <br/><br/>
+                          The API is fast and stateless. Heavy workloads (Embeddings, <strong>OpenAI Whisper-1</strong> TTS/STT processing, LLM reasoning) are offloaded to <strong>Celery workers</strong>.
+                          <br /><br />
                           The RAG agent retrieves the top-5 relevant clauses from <strong>Qdrant</strong>. The system relies on a <strong>LiteLLM wrapper</strong>, making the architecture completely AI model-agnostic (effortlessly swapping OpenAI, Anthropic, or local Ollama). The Reasoning agent forces structured JSON-mode output to guarantee every violation is backed by an exact policy citation.
                         </p>
                       </div>
@@ -260,7 +343,7 @@ function App() {
                         <h4 style={{ letterSpacing: '-0.02em', fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>02. DETERMINISTIC SCORING</h4>
                         <p style={{ opacity: 0.8, fontSize: '0.95rem', lineHeight: '1.6' }}>
                           "The AI proposes; the formula disposes." An LLM cannot be trusted to generate an auditable score.
-                          <br/><br/>
+                          <br /><br />
                           Instead, the LLM detects violations, and a <strong>deterministic risk algorithm</strong> computes the 0–100 score. Severity sets the tier, while volume positions the score within the band via confidence-weighted evidence.
                         </p>
                       </div>
@@ -270,7 +353,7 @@ function App() {
                         <h4 style={{ letterSpacing: '-0.02em', fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.5rem' }}>03. ENTERPRISE ISOLATION</h4>
                         <p style={{ opacity: 0.8, fontSize: '0.95rem', lineHeight: '1.6' }}>
                           Multi-tenancy enforced at every layer: Postgres queries, payload filters on the Qdrant vector space, and tenant-prefixed S3 keys.
-                          <br/><br/>
+                          <br /><br />
                           Secured via JWT auth with 15-minute rotation and 7-day refresh registries stored in Redis. Includes strict 3-role RBAC (admin, reviewer, viewer) and rate-limiting.
                         </p>
                       </div>
@@ -296,7 +379,7 @@ function App() {
             </AnimatePresence>
           </div>
 
-          <div 
+          <div
             className="project-card reveal"
             style={{ cursor: 'pointer' }}
             onClick={() => toggleProject('stayzy')}
@@ -325,7 +408,7 @@ function App() {
 
             <AnimatePresence>
               {expandedProject === 'stayzy' && (
-                <motion.div 
+                <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -333,11 +416,11 @@ function App() {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <div>
-                      <h4>THE BOOKING ENGINE</h4>
-                      <p style={{ opacity: 0.8, fontSize: '0.9rem', maxWidth: '800px' }}>
-                        Designed a highly reliable booking engine that implements rigorous date-conflict validation at the database level to entirely prevent double bookings.
-                        The platform supports comprehensive property listing CRUD operations, dynamic image uploads, and advanced search filtering across 50+ property listings.
-                      </p>
+                    <h4>THE BOOKING ENGINE</h4>
+                    <p style={{ opacity: 0.8, fontSize: '0.9rem', maxWidth: '800px' }}>
+                      Designed a highly reliable booking engine that implements rigorous date-conflict validation at the database level to entirely prevent double bookings.
+                      The platform supports comprehensive property listing CRUD operations, dynamic image uploads, and advanced search filtering across 50+ property listings.
+                    </p>
                   </div>
                 </motion.div>
               )}
@@ -351,19 +434,19 @@ function App() {
           <p className="text-muted" style={{ marginBottom: '2rem', fontSize: '1.25rem', maxWidth: '800px' }}>
             Beyond the code, my life revolves around two core disciplines: Music and Fitness. Whether it's discovering complex aural soundscapes or pushing physical limits at the gym, I believe in relentless consistency and constant growth.
           </p>
-          
+
           <div className="off-grid-container">
-            <div 
-              className="off-grid-item" 
-              onMouseEnter={handleMouseEnter} 
+            <div
+              className="off-grid-item"
+              onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
               style={{ backgroundImage: 'url(/music.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
               <div className="off-grid-overlay">MUSIC LISTENER</div>
             </div>
-            <div 
-              className="off-grid-item" 
-              onMouseEnter={handleMouseEnter} 
+            <div
+              className="off-grid-item"
+              onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
               style={{ backgroundImage: 'url(/gym.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
@@ -378,8 +461,8 @@ function App() {
           <div>
             {philosophy.map((item, idx) => (
               <div key={idx} className="accordion-item" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <button 
-                  className="accordion-header" 
+                <button
+                  className="accordion-header"
                   onClick={() => toggleAccordion(idx)}
                 >
                   {item.title}
@@ -387,13 +470,13 @@ function App() {
                 </button>
                 <AnimatePresence>
                   {expandedSection === idx && (
-                    <motion.div 
+                    <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       className="accordion-content"
                     >
-                      <p style={{ paddingBottom: '2rem', maxWidth: '800px', fontSize: '1.25rem' }}>
+                      <p style={{ paddingBottom: '2rem', maxWidth: '800px', fontSize: '1rem', opacity: 0.8 }}>
                         {item.content}
                       </p>
                     </motion.div>
