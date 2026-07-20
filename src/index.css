@@ -352,7 +352,7 @@ body.dark-mode {
   left: 0;
   width: 20px;
   height: 20px;
-  background-color: var(--color-text);
+  background-color: #fff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -363,7 +363,7 @@ body.dark-mode {
   font-size: 0.6rem;
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--color-bg);
+  color: #000;
   text-transform: uppercase;
   transform: translate(-50%, -50%);
   transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), height 0.3s cubic-bezier(0.25, 1, 0.5, 1);
@@ -372,13 +372,104 @@ body.dark-mode {
 .custom-cursor.hovering {
   width: 80px;
   height: 80px;
-  background-color: var(--color-text);
+  background-color: #fff;
 }
 
 @media (pointer: coarse) {
   .custom-cursor {
     display: none;
   }
+}
+
+/* Impact Marquee */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.5rem 0;
+  background-color: var(--color-text);
+  display: flex;
+  position: relative;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
+.marquee-content {
+  display: inline-flex;
+  animation: marquee 25s linear infinite;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-bg);
+}
+
+.marquee-content span {
+  padding: 0 3rem;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Case Study Expansion */
+.case-study-details {
+  grid-column: 1 / -1;
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  padding: 3rem;
+  margin-top: 2rem;
+}
+
+.case-study-details h4 {
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+/* Off-Grid Section */
+.off-grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .off-grid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.off-grid-item {
+  position: relative;
+  aspect-ratio: 16/9;
+  background-color: #222;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+}
+.off-grid-item:hover .off-grid-overlay {
+  opacity: 1;
+}
+.off-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(217, 56, 30, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 
