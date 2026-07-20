@@ -195,8 +195,37 @@ function App() {
                 <span className="tech-tag">PostgreSQL</span>
               </div>
             </div>
-            <div style={{ backgroundColor: 'var(--color-text)', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-bg)' }}>
-              <span className="font-display">THEMIS.VISUAL</span>
+            <div style={{ 
+              height: '400px', 
+              backgroundColor: '#0A0A0A', 
+              color: '#F4F4F0', 
+              fontFamily: 'monospace', 
+              padding: '2rem', 
+              overflow: 'hidden', 
+              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              borderLeft: '1px solid var(--color-border)',
+              borderBottom: '1px solid var(--color-border)'
+            }}>
+              <div style={{ position: 'absolute', top: '1rem', left: '2rem', color: '#666', fontSize: '0.75rem' }}>
+                root@themis-worker-04:~# tail -f /var/log/celery/compliance_engine.log
+              </div>
+              <pre style={{ fontSize: '0.8rem', lineHeight: '1.6', opacity: 0.8, margin: 0, whiteSpace: 'pre-wrap' }}>
+{`[2026-07-20 10:14:02] INFO: Ingesting payload_1002.pdf (4.2MB)
+[2026-07-20 10:14:02] INFO: Chunking complete. Generated 42 nodes.
+[2026-07-20 10:14:03] INFO: Generating embeddings (text-embedding-3-small)
+[2026-07-20 10:14:03] INFO: Qdrant UPSERT success (collection: tenant_a)
+[2026-07-20 10:14:04] DEBUG: Starting RAG Policy Retrieval (k=5)
+[2026-07-20 10:14:04] DEBUG: Extracted clauses: [GDPR_Art32, HIPAA_164.312]
+[2026-07-20 10:14:05] WARN: Analyzer agent flagged anomaly in node_12.`}
+<br/><br/>
+<span style={{ color: 'var(--color-accent)', fontWeight: 'bold' }}>[2026-07-20 10:14:06] CRITICAL: VIOLATION_DETECTED (Risk Score: 94)</span>
+{`[2026-07-20 10:14:06] DETAIL: Unencrypted PII transmission detected.
+[2026-07-20 10:14:06] INFO: Pushing violation case to human-review queue.
+[2026-07-20 10:14:07] INFO: Awaiting next task... _`}
+              </pre>
             </div>
             
             <AnimatePresence>
@@ -325,18 +354,16 @@ function App() {
               className="off-grid-item" 
               onMouseEnter={handleMouseEnter} 
               onMouseLeave={handleMouseLeave}
-              style={{ backgroundColor: '#1A1A1A' }}
+              style={{ backgroundImage: 'url(/music.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
-              <span className="font-display text-muted">AURAL.EXPLORATION</span>
               <div className="off-grid-overlay">MUSIC LISTENER</div>
             </div>
             <div 
               className="off-grid-item" 
               onMouseEnter={handleMouseEnter} 
               onMouseLeave={handleMouseLeave}
-              style={{ backgroundColor: '#2A2A2A' }}
+              style={{ backgroundImage: 'url(/gym.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
-              <span className="font-display text-muted">PHYSICAL.DISCIPLINE</span>
               <div className="off-grid-overlay">THE GYM</div>
             </div>
           </div>
