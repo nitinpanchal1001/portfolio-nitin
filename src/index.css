@@ -684,3 +684,93 @@ body.dark-mode {
 .accordion-content {
   overflow: hidden;
 }
+
+/* Stayzy Visual */
+.stayzy-visual {
+  height: 450px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  font-family: var(--font-display);
+  position: relative;
+}
+
+.stayzy-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  gap: 1rem;
+}
+
+.stayzy-image-wrapper {
+  flex: 1;
+  background-image: url('/brutalist-loft.png');
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--color-border);
+  position: relative;
+}
+
+.stayzy-superhost-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--color-border);
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.stayzy-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stayzy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.stayzy-title {
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.stayzy-rating {
+  color: var(--color-text);
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.stayzy-host {
+  color: var(--color-text);
+  opacity: 0.6;
+  font-family: monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.stayzy-price {
+  color: var(--color-text);
+  font-family: monospace;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  font-size: 1rem;
+}
+
+.stayzy-price span {
+  opacity: 0.6;
+  font-weight: normal;
+}

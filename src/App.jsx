@@ -386,8 +386,20 @@ function App() {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <div style={{ backgroundColor: '#D9381E', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', order: window.innerWidth > 768 ? -1 : 0 }}>
-              <span className="font-display">STAYZY.VISUAL</span>
+            <div className="stayzy-visual" style={{ order: window.innerWidth > 768 ? -1 : 0 }}>
+              <div className="stayzy-card">
+                <div className="stayzy-image-wrapper">
+                  <div className="stayzy-superhost-badge">Guest favorite</div>
+                </div>
+                <div className="stayzy-card-details">
+                  <div className="stayzy-header">
+                    <span className="stayzy-title">SECTOR 42, GURUGRAM</span>
+                    <span className="stayzy-rating">★ 4.96</span>
+                  </div>
+                  <span className="stayzy-host">Stayzy Superhost</span>
+                  <span className="stayzy-price">$120 <span>night</span></span>
+                </div>
+              </div>
             </div>
             <div className="project-info" style={{ order: 0 }}>
               <div className="flex justify-between items-start" style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -399,10 +411,12 @@ function App() {
                 Built a full-stack accommodation booking platform (MERN) with JWT-based authentication, session management, and owner/guest role separation. Designed a robust booking engine with date-conflict validation.
               </p>
               <div className="project-tech">
+                <span className="tech-tag">Vite</span>
                 <span className="tech-tag">React.js</span>
+                <span className="tech-tag">Tailwind CSS</span>
                 <span className="tech-tag">Node.js</span>
                 <span className="tech-tag">MongoDB</span>
-                <span className="tech-tag">Express</span>
+                <span className="tech-tag">JWT</span>
               </div>
             </div>
 
