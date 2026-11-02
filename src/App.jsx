@@ -699,9 +699,6 @@ function App() {
                 )}
               </p>
             )}
-            <p className="form-note form-field-wide">
-              This form sends only the fields you enter through <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">FormSubmit</a>. Site traffic is measured with anonymized, cookie-free analytics and recent anonymous visit events in Vercel logs.
-            </p>
           </form>
 
           <p className="footer-copyright">

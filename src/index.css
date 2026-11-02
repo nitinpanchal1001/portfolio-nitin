@@ -541,13 +541,6 @@ ul {
   accent-color: var(--color-accent);
 }
 
-.form-note {
-  color: #777;
-  font-size: 0.75rem;
-  line-height: 1.5;
-}
-
-.form-note a,
 .form-status a {
   text-decoration: underline;
   text-underline-offset: 3px;
