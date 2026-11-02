@@ -38,6 +38,26 @@ function App() {
     }
   }, [isDarkMode]);
 
+  // Record one anonymous visit event per tab session in Vercel Runtime Logs.
+  useEffect(() => {
+    const visitKey = 'portfolio-visit-logged';
+
+    if (sessionStorage.getItem(visitKey)) return;
+    sessionStorage.setItem(visitKey, 'true');
+
+    fetch('/api/visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        path: window.location.pathname,
+        referrer: document.referrer,
+      }),
+      keepalive: true,
+    }).catch(() => {
+      sessionStorage.removeItem(visitKey);
+    });
+  }, []);
+
   // Scroll Reveal Observer
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -81,7 +101,7 @@ function App() {
     setEnquiryStatus({ type: 'idle', message: '' });
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/panchalnitin1001@gmail.com', {
+      const response = await fetch('/api/enquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +109,7 @@ function App() {
         },
         body: JSON.stringify({
           ...Object.fromEntries(formData.entries()),
-          _url: window.location.href,
+          pageUrl: window.location.href,
         }),
       });
 
@@ -680,7 +700,7 @@ function App() {
               </p>
             )}
             <p className="form-note form-field-wide">
-              This form sends only the fields you enter through <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">FormSubmit</a>. Site traffic is measured separately with anonymized, cookie-free analytics.
+              This form sends only the fields you enter through <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">FormSubmit</a>. Site traffic is measured with anonymized, cookie-free analytics and recent anonymous visit events in Vercel logs.
             </p>
           </form>
 
