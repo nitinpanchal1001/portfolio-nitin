@@ -342,6 +342,19 @@ ul {
   letter-spacing: 0.05em;
 }
 
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.project-link svg {
+  flex: 0 0 auto;
+  color: var(--color-accent);
+}
+
 .project-tech {
   display: flex;
   flex-wrap: wrap;
@@ -442,6 +455,124 @@ ul {
 
 .footer-massive {
   color: var(--color-bg);
+}
+
+.footer-grid {
+  width: min(1400px, 100%);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  text-align: left;
+}
+
+.footer-intro p {
+  max-width: 620px;
+  margin-top: 2rem;
+  color: #aaa;
+  font-size: 1.05rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.footer-btn {
+  border-color: var(--color-bg);
+  color: var(--color-bg);
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid #333;
+  background: #111;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #555;
+  border-radius: 0;
+  padding: 0.75rem 0;
+  background: transparent;
+  color: #f4f4f0;
+  font: 400 1rem/1.5 var(--font-body);
+  outline: none;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.consent-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: #aaa;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.consent-field input {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.15rem;
+  accent-color: var(--color-accent);
+}
+
+.form-note {
+  color: #777;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.honeypot {
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+.footer-copyright {
+  grid-column: 1 / -1;
+  color: #666;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+  .footer-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+    align-items: start;
+  }
+
+  .contact-form {
+    grid-template-columns: 1fr 1fr;
+    padding: 2rem;
+  }
+
+  .form-field-wide {
+    grid-column: 1 / -1;
+  }
 }
 
 /* Animations */
@@ -585,6 +716,148 @@ body.dark-mode {
 .case-study-details h4 {
   color: var(--color-accent);
   margin-bottom: 1rem;
+}
+
+.case-study-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.case-study-grid h4 {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #444;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.case-study-grid p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  opacity: 0.8;
+}
+
+.case-study-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #444;
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* AgentScope trace illustration */
+.trace-visual {
+  min-height: 390px;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  background: #0d0d0d;
+  color: #f4f4f0;
+  font-family: monospace;
+}
+
+.trace-toolbar,
+.trace-summary,
+.trace-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trace-toolbar {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #333;
+  color: #8b8b8b;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.trace-live {
+  color: #61d38c;
+}
+
+.trace-live::before {
+  content: '';
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 4px rgba(97, 211, 140, 0.12);
+}
+
+.trace-summary {
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #242424;
+  color: #f4f4f0;
+  font-size: 0.82rem;
+}
+
+.trace-summary span {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.trace-summary small {
+  color: #666;
+  font-size: 0.62rem;
+}
+
+.trace-tree {
+  padding-top: 1rem;
+}
+
+.trace-row {
+  position: relative;
+  margin: 0.55rem 0;
+  padding: 0.8rem;
+  border: 1px solid #2f2f2f;
+  background: #141414;
+  font-size: 0.78rem;
+}
+
+.trace-row::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -1rem;
+  width: 0.8rem;
+  border-top: 1px solid #444;
+}
+
+.root-span {
+  border-left: 3px solid var(--color-accent);
+}
+
+.root-span::before {
+  display: none;
+}
+
+.level-one {
+  margin-left: 1.25rem;
+  border-left: 3px solid #6b8afd;
+}
+
+.level-two {
+  margin-left: 2.5rem;
+  border-left: 3px solid #ae7df0;
+}
+
+.trace-row b {
+  color: #999;
+  font-weight: 400;
+}
+
+.trace-row .trace-pass {
+  color: #61d38c;
+  font-weight: 700;
 }
 
 /* Terminal Container */

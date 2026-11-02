@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -92,7 +93,7 @@ function App() {
   const skillsData = [
     {
       category: "AI / MACHINE LEARNING",
-      items: ["RAG", "Agentic Workflows", "LLM Fine-tuning", "OpenAI SDK", "LiteLLM", "Hugging Face", "Ollama"]
+      items: ["RAG", "Agentic Workflows", "LLM Fine-tuning", "OpenAI Agents SDK", "LiteLLM", "Qdrant", "Hugging Face", "Ollama"]
     },
     {
       category: "LANGUAGES",
@@ -116,32 +117,6 @@ function App() {
     }
   ];
 
-  const experience = [
-    {
-      company: "M37 Labs",
-      role: "Full Stack AI Engineer",
-      period: "OCT 2025 - PRESENT",
-      points: [
-        "Architected and delivered an intelligent risk-monitoring dashboard for public-relations firms, serving 10+ client orgs and 600+ users in production.",
-        "Designed multi-tenant architecture with strict tenant isolation, scoped RBAC, and policy-driven permissions, enforcing zero cross-tenant data access.",
-        "Built a model-orchestration layer routing inference across 4 LLM providers based on task type, latency SLA, and cost constraints, cutting inference spend by 40%.",
-        "Developed FastAPI microservices and Celery-based distributed task queues powering a unified voice + chat agent with sub-second (~800ms) first-response latency and 50+ concurrent sessions.",
-        "Own the backend of a clienteling application for a leading Indian jewellery brand, designing FastAPI services and managing Azure deployments via Jenkins CI/CD."
-      ]
-    },
-    {
-      company: "AventIQ",
-      role: "Software Developer",
-      period: "NOV 2024 - OCT 2025",
-      points: [
-        "Built a full-stack MERN Employee Management System integrating Microsoft Graph APIs to auto-provision employees in Azure AD.",
-        "Developed role-based dashboards for employees and HR using React and Tailwind CSS, enabling real-time insights.",
-        "Integrated Razorpay payments and AWS Cognito authentication into a serverless senior-citizen healthcare application, reducing server maintenance costs by 30%.",
-        "Developed a React-based admin dashboard on AWS with IAM RBAC, optimizing MySQL stored procedures for a 20% query performance gain."
-      ]
-    }
-  ];
-
   return (
     <>
       {/* Custom Cursor */}
@@ -159,7 +134,7 @@ function App() {
       <header className="header">
         <div className="logo">NP.</div>
         <nav className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-          <a href="https://s3-bucket-docs-99.s3.eu-north-1.amazonaws.com/Nitin_CV.pdf" target="_blank" rel="noopener noreferrer" className="resume-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <a href="/Nitin_Panchal_CV.pdf" target="_blank" rel="noopener noreferrer" className="resume-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             [ DOWNLOAD.CV ]
           </a>
           <button
@@ -193,7 +168,7 @@ function App() {
           <div className="exp-item reveal">
             <div className="exp-meta">
               <span className="exp-company">M37 Labs</span>
-              <span className="exp-date">Oct 2025 – Present • Gurugram, India</span>
+              <span className="exp-date">Oct 2025 – Jun 2026 • Gurugram, India</span>
             </div>
             <div className="exp-content">
               <h3 className="exp-role">Full Stack AI Engineer</h3>
@@ -202,6 +177,7 @@ function App() {
                 <li>Designed multi-tenant architecture with strict tenant isolation, scoped RBAC, policy-driven permissions, enforcing zero cross-tenant data access.</li>
                 <li>Built a model-orchestration layer routing inference across 4 LLM providers based on task type and cost, cutting inference spend by 40%.</li>
                 <li>Developed FastAPI microservices and Celery-based distributed task queues powering a unified voice + chat agent (sub-second latency, 50+ concurrent sessions).</li>
+                <li>Owned the backend of a clienteling application for a leading Indian jewellery brand, shipping FastAPI services and managing Azure deployments through Jenkins CI/CD.</li>
               </ul>
             </div>
           </div>
@@ -262,6 +238,87 @@ function App() {
         {/* PROJECTS */}
         <section id="projects" className="section container">
           <h2 className="text-huge reveal" style={{ marginBottom: '4rem' }}>PROJECTS</h2>
+
+          <div
+            className="project-card reveal"
+            style={{ cursor: 'pointer' }}
+            onClick={() => toggleProject('agentscope')}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="project-info">
+              <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', gap: '1rem' }}>
+                <h3 className="project-title">
+                  <a href="https://github.com/nitinpanchal1001/AgentScope" target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="project-link">
+                    AGENTSCOPE <ArrowUpRight aria-hidden="true" size={40} />
+                  </a>
+                </h3>
+                <span className="text-accent" aria-hidden="true">{expandedProject === 'agentscope' ? '-' : '+'}</span>
+              </div>
+              <p className="project-role">AI Agent Observability &amp; Evaluation Platform</p>
+              <p>
+                Built an open-source, multi-tenant engineering platform for tracing, evaluating, replaying, and regression-testing AI agents with hierarchical spans, cost attribution, live updates, and tenant-scoped analytics.
+              </p>
+              <div className="project-tech">
+                <span className="tech-tag">Next.js</span>
+                <span className="tech-tag">FastAPI</span>
+                <span className="tech-tag">PostgreSQL</span>
+                <span className="tech-tag">Redis</span>
+                <span className="tech-tag">Celery</span>
+                <span className="tech-tag">Qdrant</span>
+                <span className="tech-tag">Docker</span>
+              </div>
+            </div>
+
+            <div className="trace-visual" aria-label="Illustration of a hierarchical AI agent trace">
+              <div className="trace-toolbar">
+                <span>DEMO TRACE / cs_agent_7f2a</span>
+                <span className="trace-live">LIVE</span>
+              </div>
+              <div className="trace-summary">
+                <span><small>STATUS</small>SUCCESS</span>
+                <span><small>SPANS</small>06</span>
+                <span><small>LATENCY</small>842ms</span>
+              </div>
+              <div className="trace-tree">
+                <div className="trace-row root-span"><span>agent.run</span><b>842ms</b></div>
+                <div className="trace-row level-one"><span>llm.reason</span><b>486ms</b></div>
+                <div className="trace-row level-two"><span>tool.lookup_order</span><b>91ms</b></div>
+                <div className="trace-row level-two"><span>tool.refund_policy</span><b>74ms</b></div>
+                <div className="trace-row level-one"><span>eval.quality_gate</span><b className="trace-pass">PASS</b></div>
+              </div>
+            </div>
+
+            <AnimatePresence>
+              {expandedProject === 'agentscope' && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="case-study-details"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <div className="case-study-grid">
+                    <div>
+                      <h4>01. RELIABLE TELEMETRY</h4>
+                      <p>A fault-tolerant Python SDK batches, samples, redacts, and retries events before transactional FastAPI ingestion. Idempotency, rotating tokens, scoped API keys, and tenant-aware lookups keep trace data reliable and isolated.</p>
+                    </div>
+                    <div>
+                      <h4>02. EVALUATION &amp; EXPERIMENTS</h4>
+                      <p>Immutable datasets and evaluator versions power deterministic, semantic, and LLM-as-judge evaluations. Distributed experiment runs support baselines, regression comparisons, CI quality gates, replay, and live progress.</p>
+                    </div>
+                    <div>
+                      <h4>03. PRODUCTION OPERATIONS</h4>
+                      <p>Tenant-scoped analytics, failure search and clustering, alerts, retention controls, audit records, Prometheus metrics, and AWS deployment infrastructure turn observability into an operational workflow.</p>
+                    </div>
+                  </div>
+                  <div className="case-study-stats">
+                    <span>HIERARCHICAL TRACES</span><span>•</span><span>IMMUTABLE REPLAY</span><span>•</span><span>CI QUALITY GATES</span><span>•</span><span>TENANT ISOLATION</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           <div
             className="project-card reveal"
@@ -505,18 +562,54 @@ function App() {
 
       {/* FOOTER */}
       <footer id="contact" className="footer section">
-        <div className="container reveal">
-          <h2 className="text-massive footer-massive">LET'S BUILD.</h2>
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginTop: '3rem' }}>
-            <a href="mailto:panchalnitin1001@gmail.com" className="btn btn-accent" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>EMAIL ME</a>
-            <a href="https://github.com/nitinpanchal1001" className="btn" style={{ borderColor: 'var(--color-bg)', color: 'var(--color-bg)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>GITHUB</a>
-            <a href="https://linkedin.com/in/nitin-panchal1001" className="btn" style={{ borderColor: 'var(--color-bg)', color: 'var(--color-bg)' }} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>LINKEDIN</a>
+        <div className="container reveal footer-grid">
+          <div className="footer-intro">
+            <h2 className="text-massive footer-massive">LET'S BUILD.</h2>
+            <p>Have a role, product, or hard engineering problem in mind? Leave a note and I’ll get back to you.</p>
+            <div className="footer-links">
+              <a href="mailto:panchalnitin1001@gmail.com" className="btn btn-accent" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>EMAIL ME</a>
+              <a href="https://github.com/nitinpanchal1001" className="btn footer-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>GITHUB</a>
+              <a href="https://linkedin.com/in/nitin-panchal1001" className="btn footer-btn" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>LINKEDIN</a>
+            </div>
           </div>
-          <p style={{ marginTop: '4rem', color: '#666', fontSize: '0.875rem', textTransform: 'uppercase' }}>
+
+          <form className="contact-form" action="https://formsubmit.co/panchalnitin1001@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New portfolio enquiry" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value="https://portfolio-nitinpanchal19.vercel.app/?submitted=true#contact" />
+            <label className="form-field">
+              <span>NAME</span>
+              <input type="text" name="name" autoComplete="name" required />
+            </label>
+            <label className="form-field">
+              <span>EMAIL</span>
+              <input type="email" name="email" autoComplete="email" required />
+            </label>
+            <label className="form-field">
+              <span>COMPANY / CONTEXT</span>
+              <input type="text" name="company" autoComplete="organization" />
+            </label>
+            <label className="form-field form-field-wide">
+              <span>WHAT WOULD YOU LIKE TO BUILD?</span>
+              <textarea name="message" rows="4" required />
+            </label>
+            <label className="consent-field form-field-wide">
+              <input type="checkbox" name="consent" value="yes" required />
+              <span>I choose to share these details with Nitin so he can reply to this enquiry.</span>
+            </label>
+            <input type="text" name="_honey" className="honeypot" tabIndex="-1" autoComplete="off" aria-hidden="true" />
+            <button type="submit" className="btn btn-accent form-field-wide">SEND ENQUIRY</button>
+            <p className="form-note form-field-wide">
+              This form sends only the fields you enter through <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">FormSubmit</a>. Site traffic is measured separately with anonymized, cookie-free analytics.
+            </p>
+          </form>
+
+          <p className="footer-copyright">
             © {new Date().getFullYear()} Nitin Panchal. All rights reserved.
           </p>
         </div>
       </footer>
+      <Analytics />
     </>
   );
 }

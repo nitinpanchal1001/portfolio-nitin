@@ -1,16 +1,27 @@
-# React + Vite
+# Nitin Panchal — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + Vite portfolio for Nitin Panchal, deployed on Vercel.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Production checks
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run lint
+npm run build
+```
 
-## Expanding the Oxlint configuration
+## Visitor analytics
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The site uses Vercel Web Analytics through `@vercel/analytics`. The tracking is cookie-free and anonymized. After deploying, open the Vercel project dashboard, go to **Analytics**, and enable Web Analytics if it is not already enabled.
+
+## Enquiry form
+
+The contact form posts opt-in visitor details to FormSubmit and forwards them to `panchalnitin1001@gmail.com`. FormSubmit sends a one-time activation email after the first test submission; approve it before relying on the form for leads.
+
+The form includes an explicit consent checkbox and a honeypot field. It does not silently collect names, email addresses, or other personally identifying information.
