@@ -123,7 +123,7 @@ function App() {
       form.reset();
       setEnquiryStatus({
         type: 'success',
-        message: 'Enquiry sent successfully. Thanks — I’ll get back to you soon.',
+        message: 'Enquiry received successfully. Thanks — I’ll get back to you soon.',
       });
     } catch {
       setEnquiryStatus({
@@ -685,7 +685,7 @@ function App() {
               disabled={isSubmittingEnquiry || enquiryStatus.type === 'success'}
             >
               {isSubmittingEnquiry && <span className="submit-spinner" aria-hidden="true" />}
-              {isSubmittingEnquiry ? 'SENDING…' : enquiryStatus.type === 'success' ? 'ENQUIRY SENT ✓' : 'SEND ENQUIRY'}
+              {isSubmittingEnquiry ? 'SENDING…' : enquiryStatus.type === 'success' ? 'ENQUIRY RECEIVED ✓' : 'SEND ENQUIRY'}
             </button>
             {enquiryStatus.type !== 'idle' && (
               <p

@@ -27,6 +27,8 @@ Visit logs do not contain a visitor's name, email address, or a full IP address.
 
 ## Enquiry form
 
-The contact form posts opt-in visitor details through the same-origin `/api/enquiry` Vercel Function, which validates the payload and forwards it to FormSubmit at `panchalnitin1001@gmail.com`. The proxy avoids a browser cross-origin preflight and records delivery success, failure, and duration in Vercel Logs without logging the visitor's email or message. FormSubmit sends a one-time activation email after the first test submission; approve it before relying on the form for leads.
+The contact form posts opt-in visitor details through the same-origin `/api/enquiry` Vercel Function. After validation, the function records the enquiry as `enquiry_received`, responds immediately, and attempts FormSubmit email delivery in the background. Search Vercel Logs for the enquiry ID to correlate `enquiry_received` with `enquiry_delivery_succeeded`, `enquiry_delivery_rejected`, or `enquiry_delivery_timeout`.
+
+The protected runtime log is the immediate receipt record and includes the submitted name, email, company, and message. FormSubmit delivery is secondary and may require one-time email activation before forwarded messages arrive at `panchalnitin1001@gmail.com`.
 
 The form includes an explicit consent checkbox and a honeypot field. It does not silently collect names, email addresses, or other personally identifying information.

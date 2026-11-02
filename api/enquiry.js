@@ -1,8 +1,15 @@
+import { waitUntil } from '@vercel/functions';
+import { randomUUID } from 'node:crypto';
+
 const MAX_NAME_LENGTH = 120;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_COMPANY_LENGTH = 160;
 const MAX_MESSAGE_LENGTH = 5000;
-const DELIVERY_TIMEOUT_MS = 8000;
+const DELIVERY_TIMEOUT_MS = 20000;
+
+export const config = {
+  maxDuration: 30,
+};
 
 function cleanText(value, maxLength) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -44,6 +51,28 @@ export default async function handler(request, response) {
     });
   }
 
+  const enquiryId = randomUUID();
+  const enquiry = { enquiryId, name, email, company, message, pageUrl };
+
+  console.log('enquiry_received', {
+    enquiryId,
+    name,
+    email,
+    company,
+    message,
+    pageUrl,
+  });
+
+  waitUntil(deliverEnquiry(enquiry));
+
+  return sendJson(response, 202, {
+    success: true,
+    status: 'received',
+    enquiryId,
+  });
+}
+
+async function deliverEnquiry({ enquiryId, name, email, company, message, pageUrl }) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), DELIVERY_TIMEOUT_MS);
   const startedAt = Date.now();
@@ -54,6 +83,8 @@ export default async function handler(request, response) {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
+        Origin: 'https://nitinpanchal.vercel.app',
+        Referer: 'https://nitinpanchal.vercel.app/',
       },
       body: JSON.stringify({
         name,
@@ -63,6 +94,7 @@ export default async function handler(request, response) {
         consent: 'yes',
         _subject: 'New portfolio enquiry',
         _template: 'table',
+        _captcha: 'false',
         _url: pageUrl,
       }),
       signal: controller.signal,
@@ -73,25 +105,23 @@ export default async function handler(request, response) {
 
     if (!delivered) {
       console.warn('enquiry_delivery_rejected', {
+        enquiryId,
         durationMs: Date.now() - startedAt,
         upstreamStatus: deliveryResponse.status,
+        upstreamMessage: cleanText(result?.message, 300),
       });
-      return sendJson(response, 502, { success: false, message: 'Delivery service rejected the enquiry.' });
+      return;
     }
 
     console.log('enquiry_delivery_succeeded', {
+      enquiryId,
       durationMs: Date.now() - startedAt,
-      hasCompany: Boolean(company),
     });
-    return sendJson(response, 200, { success: true });
   } catch (error) {
     const timedOut = error?.name === 'AbortError';
     console.error(timedOut ? 'enquiry_delivery_timeout' : 'enquiry_delivery_failed', {
+      enquiryId,
       durationMs: Date.now() - startedAt,
-    });
-    return sendJson(response, timedOut ? 504 : 502, {
-      success: false,
-      message: timedOut ? 'Delivery timed out.' : 'Delivery failed.',
     });
   } finally {
     clearTimeout(timeout);
