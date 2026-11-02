@@ -15,6 +15,8 @@ function App() {
   const [isHovering, setIsHovering] = useState(false);
   const [expandedSection, setExpandedSection] = useState(null);
   const [expandedProject, setExpandedProject] = useState(null);
+  const [isSubmittingEnquiry, setIsSubmittingEnquiry] = useState(false);
+  const [enquiryStatus, setEnquiryStatus] = useState({ type: 'idle', message: '' });
 
   // Mouse tracking for Custom Cursor
   useEffect(() => {
@@ -65,6 +67,58 @@ function App() {
 
   const toggleProject = (index) => {
     setExpandedProject(expandedProject === index ? null : index);
+  };
+
+  const handleEnquirySubmit = async (event) => {
+    event.preventDefault();
+
+    if (isSubmittingEnquiry || enquiryStatus.type === 'success') return;
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setIsSubmittingEnquiry(true);
+    setEnquiryStatus({ type: 'idle', message: '' });
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/panchalnitin1001@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          ...Object.fromEntries(formData.entries()),
+          _url: window.location.href,
+        }),
+      });
+
+      const result = await response.json().catch(() => null);
+      const submissionSucceeded = response.ok && (result?.success === true || result?.success === 'true');
+
+      if (!submissionSucceeded) {
+        throw new Error('Submission was not accepted');
+      }
+
+      form.reset();
+      setEnquiryStatus({
+        type: 'success',
+        message: 'Enquiry sent successfully. Thanks — I’ll get back to you soon.',
+      });
+    } catch {
+      setEnquiryStatus({
+        type: 'error',
+        message: 'Something went wrong while sending. Please try again or email me directly.',
+      });
+    } finally {
+      setIsSubmittingEnquiry(false);
+    }
+  };
+
+  const resetEnquiryStatus = () => {
+    if (enquiryStatus.type !== 'idle') {
+      setEnquiryStatus({ type: 'idle', message: '' });
+    }
   };
 
   const philosophy = [
@@ -573,7 +627,14 @@ function App() {
             </div>
           </div>
 
-          <form className="contact-form" action="https://formsubmit.co/panchalnitin1001@gmail.com" method="POST">
+          <form
+            className="contact-form"
+            action="https://formsubmit.co/panchalnitin1001@gmail.com"
+            method="POST"
+            onSubmit={handleEnquirySubmit}
+            onChange={resetEnquiryStatus}
+            aria-busy={isSubmittingEnquiry}
+          >
             <input type="hidden" name="_subject" value="New portfolio enquiry" />
             <input type="hidden" name="_template" value="table" />
             <input type="hidden" name="_next" value="https://portfolio-nitinpanchal19.vercel.app/?submitted=true#contact" />
@@ -598,7 +659,26 @@ function App() {
               <span>I choose to share these details with Nitin so he can reply to this enquiry.</span>
             </label>
             <input type="text" name="_honey" className="honeypot" tabIndex="-1" autoComplete="off" aria-hidden="true" />
-            <button type="submit" className="btn btn-accent form-field-wide">SEND ENQUIRY</button>
+            <button
+              type="submit"
+              className={`btn btn-accent form-field-wide submit-btn ${enquiryStatus.type === 'success' ? 'submit-btn-success' : ''}`}
+              disabled={isSubmittingEnquiry || enquiryStatus.type === 'success'}
+            >
+              {isSubmittingEnquiry && <span className="submit-spinner" aria-hidden="true" />}
+              {isSubmittingEnquiry ? 'SENDING…' : enquiryStatus.type === 'success' ? 'ENQUIRY SENT ✓' : 'SEND ENQUIRY'}
+            </button>
+            {enquiryStatus.type !== 'idle' && (
+              <p
+                className={`form-status form-field-wide form-status-${enquiryStatus.type}`}
+                role={enquiryStatus.type === 'error' ? 'alert' : 'status'}
+                aria-live="polite"
+              >
+                {enquiryStatus.message}
+                {enquiryStatus.type === 'error' && (
+                  <> <a href="mailto:panchalnitin1001@gmail.com">Email me directly.</a></>
+                )}
+              </p>
+            )}
             <p className="form-note form-field-wide">
               This form sends only the fields you enter through <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noreferrer">FormSubmit</a>. Site traffic is measured separately with anonymized, cookie-free analytics.
             </p>

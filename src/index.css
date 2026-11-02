@@ -547,6 +547,76 @@ ul {
   line-height: 1.5;
 }
 
+.form-note a,
+.form-status a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 3.5rem;
+}
+
+.submit-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.submit-btn:disabled:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.submit-btn-success,
+.submit-btn-success:disabled:hover {
+  background: #237a48;
+  border-color: #237a48;
+  opacity: 1;
+}
+
+.submit-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: submit-spin 0.7s linear infinite;
+}
+
+.form-status {
+  margin-top: -0.25rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid currentColor;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.form-status-success {
+  background: rgba(35, 122, 72, 0.16);
+  color: #78d69d;
+}
+
+.form-status-error {
+  background: rgba(229, 57, 53, 0.14);
+  color: #ff8f8c;
+}
+
+@keyframes submit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit-spinner {
+    animation-duration: 1.4s;
+  }
+}
+
 .honeypot {
   position: absolute !important;
   left: -9999px !important;
