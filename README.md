@@ -27,8 +27,17 @@ Visit logs do not contain a visitor's name, email address, or a full IP address.
 
 ## Enquiry form
 
-The contact form posts opt-in visitor details through the same-origin `/api/enquiry` Vercel Function. After validation, the function records the enquiry as `enquiry_received`, responds immediately, and attempts FormSubmit email delivery in the background. Search Vercel Logs for the enquiry ID to correlate `enquiry_received` with `enquiry_delivery_succeeded`, `enquiry_delivery_rejected`, or `enquiry_delivery_timeout`.
+The contact form posts opt-in visitor details through the same-origin `/api/enquiry` Vercel Function. After validation, the function sends the enquiry directly through Resend and returns success only after Resend accepts the email. The request has a six-second timeout and uses an idempotency key to prevent duplicate delivery.
 
-The protected runtime log is the immediate receipt record and includes the submitted name, email, company, and message. FormSubmit delivery is secondary and may require one-time email activation before forwarded messages arrive at `panchalnitin1001@gmail.com`.
+Required Vercel environment variable:
+
+- `RESEND_API_KEY` - private Resend API key. The official Resend Vercel integration can add this automatically.
+
+Optional Vercel environment variables:
+
+- `RESEND_FROM_EMAIL` - verified sender, defaulting to `Nitin Portfolio <onboarding@resend.dev>` for initial testing.
+- `RESEND_TO_EMAIL` - enquiry recipient, defaulting to `panchalnitin1001@gmail.com`.
+
+Search Vercel Logs for `enquiry_email_sent`, `enquiry_email_rejected`, `enquiry_email_timeout`, or the enquiry ID. Submitted details are recorded as `enquiry_received` before the delivery attempt.
 
 The form includes an explicit consent checkbox and a honeypot field. It does not silently collect names, email addresses, or other personally identifying information.

@@ -123,7 +123,7 @@ function App() {
       form.reset();
       setEnquiryStatus({
         type: 'success',
-        message: 'Enquiry received successfully. Thanks — I’ll get back to you soon.',
+        message: 'Enquiry sent successfully. Thanks — I’ll get back to you soon.',
       });
     } catch {
       setEnquiryStatus({
@@ -649,15 +649,12 @@ function App() {
 
           <form
             className="contact-form"
-            action="https://formsubmit.co/panchalnitin1001@gmail.com"
+            action="/api/enquiry"
             method="POST"
             onSubmit={handleEnquirySubmit}
             onChange={resetEnquiryStatus}
             aria-busy={isSubmittingEnquiry}
           >
-            <input type="hidden" name="_subject" value="New portfolio enquiry" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_next" value="https://portfolio-nitinpanchal19.vercel.app/?submitted=true#contact" />
             <label className="form-field">
               <span>NAME</span>
               <input type="text" name="name" autoComplete="name" required />
@@ -685,7 +682,7 @@ function App() {
               disabled={isSubmittingEnquiry || enquiryStatus.type === 'success'}
             >
               {isSubmittingEnquiry && <span className="submit-spinner" aria-hidden="true" />}
-              {isSubmittingEnquiry ? 'SENDING…' : enquiryStatus.type === 'success' ? 'ENQUIRY RECEIVED ✓' : 'SEND ENQUIRY'}
+              {isSubmittingEnquiry ? 'SENDING…' : enquiryStatus.type === 'success' ? 'ENQUIRY SENT ✓' : 'SEND ENQUIRY'}
             </button>
             {enquiryStatus.type !== 'idle' && (
               <p
